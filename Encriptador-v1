@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encriptador de Texto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Encriptador de Texto - Cifrado César</h2>
+        <textarea id="inputText" placeholder="Escribe el texto aquí..."></textarea>
+        <input type="number" id="shift" placeholder="Desplazamiento (e.g., 3)" min="1" max="25">
+        <button onclick="encriptar()">Encriptar</button>
+        <div class="output" id="outputText"></div>
+    </div>
+
+    <script>
+        function encriptar() {
+            const inputText = document.getElementById('inputText').value;
+            const shift = parseInt(document.getElementById('shift').value);
+            let outputText = '';
+
+            for (let i = 0; i < inputText.length; i++) {
+                let char = inputText[i];
+                if (char.match(/[a-z]/i)) {
+                    const code = inputText.charCodeAt(i);
+
+                    // Letras mayúsculas
+                    if (code >= 65 && code <= 90) {
+                        char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+                    }
+                    // Letras minúsculas
+                    else if (code >= 97 && code <= 122) {
+                        char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+                    }
+                }
+
+                outputText += char;
+            }
+
+            document.getElementById('outputText').innerText = outputText;
+        }
+    </script>
+</body>
+</html>
